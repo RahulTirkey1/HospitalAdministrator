@@ -1,0 +1,157 @@
+
+<div class="sticky-bg" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="center center" (window:resize)="getWidth($event)" *ngIf="status">
+                
+    <h1 fxLayout fxLayoutAlign="center center" fxLayoutGap="10px" class="bigfont" style="color:white" >
+        <mat-icon>account_circle</mat-icon>&nbsp;
+        <span *ngIf="creation">Add patient</span>
+        <span *ngIf="!creation">Update patient</span>
+    </h1>
+    <div fxLayout fxLayoutAlign="center center" fxLayoutAlign.xs="center center"  fxLayoutGap="20px">
+        <!---------------------------button to go back to user lists page--------------------->
+        <button class="adjust" fxLayout fxLayoutAlign="center center" type="button" mat-raised-button (click)="exit()">
+            <mat-icon>close</mat-icon>
+            <span *ngIf="!mobDevice">CANCEL</span>
+        </button>
+        <!---------------------------button to save user to Database-------------------->
+        <button class="adjust" [disabled]="userForm.invalid" fxLayout fxLayoutAlign="center center" type="button" mat-raised-button color="warn" >
+            <mat-icon>save</mat-icon>
+            <span *ngIf=" creation" (click)="navigate()">SAVE</span>
+            <span *ngIf=" !creation" (click)="update()">UPDATE</span>
+        </button> 
+
+        <button class="adjust" *ngIf=" !creation" (click)="delete()" [disabled]="userForm.invalid" fxLayout fxLayoutAlign="center center" type="button" mat-raised-button color="primary" >
+            <mat-icon>delete</mat-icon>
+            <span *ngIf="!mobDevice">DELETE</span>
+        </button> 
+    </div>
+    
+</div>
+
+<div fxLayout="column" fxLayoutAlign="start stretch" class="sticky-bg1 u4-padding" *ngIf="status">     
+    <form [formGroup]="userForm">    
+        <mat-card>
+            <div class="primaryTextCol fix">Patient Details *</div>
+            <br><br>
+            <div fxLayout fxLayoutAlign="space-between start" class="fix" fxLayout.sm="column" fxLayoutAlign.sm="center start"
+            fxLayoutGap.sm="10px" fxLayout.xs="column" fxLayoutAlign.xs="center center" fxLayoutGap.xs="10px"> 
+                <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="15px" fxFlexOrder="2">
+                    
+
+                    <!----------------------------------user Input for Address1------------------->
+                    <mat-form-field appearance="fill" class="width-1">
+                        <mat-label>Address 1</mat-label>
+                        <input type="text" (blur)="onChange(userForm.get('address1'))" required matInput formControlName="address1" maxlength="50">
+                        <mat-hint align="end">{{userForm.get('address1')?.value?.length || 0}}/50</mat-hint>
+                        <!--------------------valdiation error when Address 1 is required------------------------------>
+                        <mat-error *ngIf="userForm.get('address1')?.getError('required')">Please Enter Address</mat-error>
+                        <!--------------------valdiation error when minimum length is not provided------------------------------>
+                        <mat-error *ngIf="userForm.get('address1')?.getError('minlength')">Address 1 should have atleast 5 characters</mat-error>
+                    </mat-form-field>
+                    <!----------------------------------user Input for Address2------------------->
+                    <mat-form-field appearance="fill" class="width-1">
+                        <mat-label>Address 2</mat-label>
+                        <input type="text" (blur)="onChange(userForm.get('address2'))" matInput formControlName="address2" maxlength="50">
+                        <mat-hint align="end">{{userForm.get('address2')?.value?.length || 0}}/50</mat-hint>
+                        <!--------------------valdiation error when minimum length is not provided------------------------------>
+                        <mat-error *ngIf="userForm.get('address2')?.getError('minlength')">Address 2 should have atleast 5 characters</mat-error>
+                    </mat-form-field>
+                    <!----------------------------------user Input for Address2------------------->
+                    
+                    <div fxLayout fxLayoutAlign="center center" fxLayoutGap="10px" fxLayout.sm="column" fxLayoutAlign.sm="center start" fxLayout.xs="column" fxLayoutAlign.xs="center start">
+                        <!----------------------------------user Input for State------------------->
+                        <mat-form-field appearance="fill" class="width-2">
+                            <mat-label>State</mat-label>
+                            <!-----------------------Dropdown for all states---------------------------------->
+                            <mat-select formControlName="state" required>
+                                <mat-option *ngFor="let state of listStates?.default" [value]="state.name">{{state.name}}</mat-option>
+                            </mat-select>
+                            <!----------------------------------user Input for Pincode------------------->
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="width-3">
+                            <mat-label>Pincode</mat-label>
+                            <input onkeypress="return /[0-9]/i.test(event.key)" type="text" required matInput formControlName="pincode" minlength="6" maxlength="6">
+                            <mat-hint align="end">{{userForm.get('pincode')?.value?.length || 0}}/6</mat-hint>
+                            <!------------------------Error When proper pincode is not provided------------------------->
+                            <mat-error>Enter 6 Digit Pincode</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field appearance="fill" class="width-2">
+                        <mat-label>City</mat-label>
+                        <input type="text" (blur)="onChange(userForm.get('city'))" required matInput formControlName="city" maxlength="20">
+                        <mat-hint align="end">{{userForm.get('city')?.value?.length || 0}}/50</mat-hint>
+                        <!--------------------valdiation error when City name is required------------------------------>
+                        <mat-error *ngIf="userForm.get('city')?.getError('required')">Please Enter City</mat-error>
+                        <!--------------------valdiation error when minimum length is not provided------------------------------>
+                        <mat-error *ngIf="userForm.get('city')?.getError('minlength')">City Name should have atleast 5 characters</mat-error>
+                    </mat-form-field>
+                </div>
+                
+            
+                <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="15px" fxFlexOrder="1">
+                    
+                    <!-------------------------------------User Input For Role---------------------->
+                    <mat-radio-group formControlName="covid" fxLayoutGap="30px" fxLayout fxLayout.xs="column" fxLayoutGap.xs="10px">
+                        <mat-label>Covid Status *</mat-label>
+                        <div fxLayoutGap="10px" fxLayout fxLayout.xs="column">
+                            <!----------------------------Radio button------------------->
+                            <mat-radio-button value="true" [checked]="checked">Positive</mat-radio-button>
+                            <mat-radio-button value="false" [checked]="!checked">Negative</mat-radio-button>
+                            
+                        </div>    
+                    </mat-radio-group>
+                    <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign.xs="center start">
+                        <!-------------------------------------User Input For Firstname---------------------->
+                        <mat-form-field appearance="fill" class="width-2">
+                            <mat-label>First Name</mat-label>
+                            <input type="text" (blur)="onChange(userForm.get('firstname'))" required matInput formControlName="firstname" maxlength="50">
+                            <mat-hint align="end">{{userForm.get('firstname')?.value?.length || 0}}/50</mat-hint>
+                            <!--------------------valdiation error when Firstname name is required------------------------------>
+                            <mat-error *ngIf="userForm.get('firstname')?.getError('required')">Please Enter Firstname</mat-error>
+                            <!-------------------------------------User Input For Lastname---------------------->
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="width-4">
+                            <mat-label>Last Name</mat-label>
+                            <input type="text" (blur)="onChange(userForm.get('lastname'))" required matInput formControlName="lastname" maxlength="50">
+                            <mat-hint align="end">{{userForm.get('lastname')?.value?.length || 0}}/50</mat-hint>
+                            <!--------------------valdiation error when Lastname name is required------------------------------>
+                            <mat-error *ngIf="userForm.get('lastname')?.getError('required')">Please Enter LastName</mat-error>
+                            
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px" fxLayout.sm="column" fxLayoutAlign.sm="center start" fxLayout.xs="column" fxLayoutAlign.xs="center start">
+                        <!-------------------------------------User Input For Email---------------------->
+                        <mat-form-field appearance="fill" class="width-1 email">
+                            <mat-label>Email</mat-label>
+                            <input type="text" required matInput formControlName="email" maxlength="50">
+                            <mat-hint align="end">{{userForm.get('email')?.value?.length || 0}}/50</mat-hint>
+                            <!--------------------valdiation error when Email is required------------------------------>
+                            <mat-error *ngIf="userForm.get('email')?.getError('required')">Please Enter Email</mat-error>
+                            <!--------------------valdiation error when Email pattern is required------------------------------>
+                            <mat-error *ngIf="userForm.get('email')?.getError('pattern')">Enter Valid Email Address</mat-error>
+                        </mat-form-field>
+                        <!-------------------------------------User Input For Mobile---------------------->
+                        <mat-form-field appearance="fill" class="width-3">
+                            <mat-label>Mobile</mat-label>
+                            <input onkeypress="return /[0-9]/i.test(event.key)" type="text" required matInput formControlName="phone" maxlength="10">
+                            <mat-hint align="end">{{userForm.get('phone')?.value?.length || 0}}/10</mat-hint>
+                            <!-----------------------Error for valid Phone Number--------------------->
+                            <mat-error>Valid Phone Number required</mat-error>
+                            
+                        </mat-form-field>
+                    </div>
+                    <!-------------------------------------User Input For Department---------------------->
+                    <mat-form-field appearance="fill" class="width-1">
+                            <mat-label>Department</mat-label>
+                            <input type="text" required matInput formControlName="department" maxlength="50" [readonly]="userForm.get('role')?.value=='true'">
+                            <mat-hint align="end">{{userForm.get('department')?.value?.length || 0}}/50</mat-hint>
+                            <!--------------------valdiation error when Department is required------------------------------>
+                            <mat-error *ngIf="userForm.get('department')?.getError('required')">Please Enter Department</mat-error>
+                            <!--------------------valdiation error when Department minimum length is required------------------------------>
+                            <mat-error *ngIf="userForm.get('department')?.getError('minlength')">Department Name should have atleast 5 characters</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>   
+        </mat-card>
+    
+    </form>  
+</div>    

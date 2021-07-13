@@ -1,0 +1,60 @@
+<!----------------------------------For Mat SideNav Content--------------------------->
+<mat-sidenav-container [autosize]="true" class="full-w"  (window:resize)="getwidth($event)">
+    <mat-sidenav #side [style.width]="(show1 && !mobileDevice)?'18%':'auto'"  mode="side" opened  fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="30px">
+        <mat-nav-list class="display-1 primaryBackCol" fxLayoutGap="20px" fxLayout fxLayoutAlign="center center" fxLayoutAlign.xs="center center" fxLayoutAlign.sm="center center">
+            <div *ngIf="show1 && !mobileDevice" fxLayout fxLayoutAlign="start center">
+                <img src="../../../assets/covid.png">
+                <div>NeoPort</div>
+            </div>
+            <div class="breadCrumb" (click)="mobView()"><mat-icon>menu</mat-icon></div>
+        </mat-nav-list>
+        <!---------------For displaying links in Mat-Sidenav-------------------->
+            <a   class="text-colour" routerLinkActive="active-list-item" fxLayout fxLayoutGap="10px" fxLayoutAlign="start center" class="display-2 pointer">        
+                <div><mat-icon>pie_chart</mat-icon></div>
+                <div *ngIf="show1 && !mobileDevice">DashBoard</div>
+            </a>
+            <a  routerLinkActive="active-list-item" fxLayout fxLayoutGap="10px" fxLayoutAlign="start center" class="display-2 pointer">                    
+                <div><mat-icon>assignment_late</mat-icon></div>
+                <div *ngIf="show1 && !mobileDevice">Trips</div>
+            </a>
+
+            <a   routerLinkActive="active-list-item" fxLayout fxLayoutGap="10px" fxLayoutAlign="start center" class="display-2 pointer">                    
+                <div><mat-icon>account_circle</mat-icon></div>
+                <div *ngIf="show1 && !mobileDevice">Users</div>              
+            </a>
+        
+    </mat-sidenav>
+    <!------------------------------Mat Side Nav content on the main Screen--------------------->
+    <mat-sidenav-content fxLayout="column" fxLayoutAlign="start stretch" fxFlex="100">
+        
+        <div fxLayout fxLayoutAlign="end center" class="display-3">
+            
+            <button class="menu" [matMenuTriggerFor]="belowMenu" (click)="menuOpen=true" fxLayout fxLayoutAlign="center center" fxLayoutGap="10px" >
+                <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="5px">
+                    <div>
+                        K.Mahesh
+                    </div>
+                    <div>
+                        sysadmin@website.com
+                    </div>
+                </div>
+                <div *ngIf="!menuOpen">
+                    <i class="arrow down"></i>
+                </div>
+                <div *ngIf="menuOpen">
+                    <i class="arrow up"></i>
+                </div>
+                
+            </button>
+            <!-------------Logout Button to redirect back to Login------------------------>
+                <mat-menu class="matMenu" (closed)="menuClosed()" #belowMenu="matMenu" yPosition="below">
+                    <button mat-menu-item (click)="logout()">Logout</button>
+                    
+                </mat-menu>
+        </div>    
+        <!---------------------------For navigating Child Components inside mat-Sidenav Content--------------->
+        <router-outlet></router-outlet> 
+
+    </mat-sidenav-content>
+</mat-sidenav-container>
+

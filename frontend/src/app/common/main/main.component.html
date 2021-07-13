@@ -1,0 +1,12 @@
+<div (window:resize)="getwidth($event)">
+    <!-------------------------------------------For Desktop View--------------------------------->
+    <div  class="full-w background" [lazyLoad]="img" fxLayout fxLayoutAlign="center center">
+        
+        <mat-card fxLayout="column" fxLayoutAlign="start center" id="white" fxLayoutGap="20px">
+            <div fxLayoutAlign="center center">
+                <img src="../../../assets/logo.png">
+            </div>
+            <router-outlet></router-outlet>
+        </mat-card>
+    </div>
+</div>            

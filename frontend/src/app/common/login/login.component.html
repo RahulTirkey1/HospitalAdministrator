@@ -1,0 +1,42 @@
+
+            <form [formGroup]="loginForm" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2px">
+                <!---------------------------------Email Input by user------------------------->
+                <mat-form-field appearance="fill" class="input-size">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" required type="text" maxlength="40">
+                    <mat-icon *ngIf="email?.invalid && email?.touched" matSuffix class="red-icon-error">error</mat-icon>
+                    <!---------------------------------Error validation for required Email------------------------->
+                    <mat-error *ngIf="email?.hasError('required')">
+                        Please Enter a Email Address
+                    </mat-error>
+                    <!---------------------------------Error validation for Email Pattern ------------------------->
+                    <mat-error *ngIf="email?.hasError('pattern')">
+                        Enter a valid Email Address
+                    </mat-error>
+                    <!---------------------------------Error validation for minimum length of Email------------------------->
+                    <mat-error *ngIf="email?.hasError('minlength') && !email?.hasError('pattern')">
+                        Email should contain atleast 6 characters
+                    </mat-error>
+                </mat-form-field>
+                <!---------------------------------Password Input by user------------------------->
+                <mat-form-field appearance="fill" class="input-size">
+                    <mat-label>Password</mat-label>
+                    <input matInput required formControlName="password" type="password" maxlength="15" minlength="8">
+                    <mat-icon *ngIf="password?.invalid && password?.touched" matSuffix class="red-icon-error">error</mat-icon>
+                    <!---------------------------------Error validation for required Password------------------------->
+                    <mat-error *ngIf="password?.hasError('required')">
+                        Please enter a Password
+                    </mat-error>
+                </mat-form-field>
+                
+                <!-----------------------Button to navigate for next page ---------------------->
+                <div>
+                    <button mat-raised-button color="primary" type="button" [disabled]="loginForm.invalid" class="input-size" (click)="nextPage()">Login</button>
+                </div>
+                <br>
+                <!-----------------------Forgot Password ---------------------->
+                <h3 class="pointer" (click)="register()">
+                    Register Here
+                </h3>
+            </form>
+            

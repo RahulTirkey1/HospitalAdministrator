@@ -1,0 +1,79 @@
+<div  class="full-w background " [lazyLoad]="img" fxLayout fxLayoutAlign="center center" (window:resize)="getwidth($event)" >
+    
+        <mat-card>
+            <div fxLayoutAlign="center center" *ngIf="!mobileDevice">
+                <img src="../../../assets/logo.png">
+            </div>
+            <form [formGroup]="userForm" fxLayout="column" fxLayoutAlign="center center">
+                <div class="primaryTextCol fix" fxLayoutAlign="center center">Register *</div>
+                <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign.xs="center start">
+                    
+                    <!-------------------------------------User Input For Firstname---------------------->
+                    <mat-form-field appearance="fill" class="width-2">
+                        <mat-label>First Name</mat-label>
+                        <input type="text" (blur)="onChange(userForm.get('firstname'))" required matInput formControlName="firstname" maxlength="50">
+                        <mat-hint align="end">{{userForm.get('first_name')?.value?.length || 0}}/50</mat-hint>
+                        <!--------------------valdiation error when Firstname name is required------------------------------>
+                        <mat-error *ngIf="userForm.get('firstname')?.getError('required')">Please Enter Firstname</mat-error>
+                        <!-------------------------------------User Input For Lastname---------------------->
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="width-4">
+                        <mat-label>Last Name</mat-label>
+                        <input type="text" (blur)="onChange(userForm.get('lastname'))" required matInput formControlName="lastname" maxlength="50">
+                        <mat-hint align="end">{{userForm.get('lastname')?.value?.length || 0}}/50</mat-hint>
+                        <!--------------------valdiation error when Lastname name is required------------------------------>
+                        <mat-error *ngIf="userForm.get('lastname')?.getError('required')">Please Enter LastName</mat-error>
+                        
+                    </mat-form-field>
+                </div>
+                <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px" fxLayout.sm="column" fxLayoutAlign.sm="center start" fxLayout.xs="column" fxLayoutAlign.xs="center start">
+                    <!-------------------------------------User Input For Email---------------------->
+                    <mat-form-field appearance="fill" class="width-1 email">
+                        <mat-label>Email</mat-label>
+                        <input type="text" required matInput formControlName="email" maxlength="50">
+                        <mat-hint align="end">{{userForm.get('email')?.value?.length || 0}}/50</mat-hint>
+                        <!--------------------valdiation error when Email is required------------------------------>
+                        <mat-error *ngIf="userForm.get('email')?.getError('required')">Please Enter Email</mat-error>
+                        <!--------------------valdiation error when Email pattern is required------------------------------>
+                        <mat-error *ngIf="userForm.get('email')?.getError('pattern')">Enter Valid Email Address</mat-error>
+                    </mat-form-field>
+                    <!-------------------------------------User Input For Mobile---------------------->
+                    <mat-form-field appearance="fill" class="width-3">
+                        <mat-label>Mobile</mat-label>
+                        <input numbersOnly="true" type="text" required matInput formControlName="phone" maxlength="10">
+                        <mat-hint align="end">{{userForm.get('phone')?.value?.length || 0}}/10</mat-hint>
+                        <!-----------------------Error for valid Phone Number--------------------->
+                        <mat-error>Valid Phone Number required</mat-error>
+                        
+                    </mat-form-field>
+                </div>
+                <div fxLayout fxLayoutAlign="start center" fxLayoutGap="10px" fxLayout.sm="column" fxLayoutAlign.sm="center start" fxLayout.xs="column" fxLayoutAlign.xs="center start">
+                    <!-------------------------------------User Input For Email---------------------->
+                    <mat-form-field appearance="fill" class="width-2">
+                        <mat-label>Password</mat-label>
+                        <input type="password" required matInput formControlName="password" maxlength="50">
+                        <mat-hint align="end">{{userForm.get('password')?.value?.length || 0}}/15</mat-hint>
+                        <!--------------------valdiation error when Email is required------------------------------>
+                        <mat-error *ngIf="userForm.get('password')?.getError('required')">Please Enter Password</mat-error>
+                        <!--------------------valdiation error when Email pattern is required------------------------------>
+                        <mat-error *ngIf="userForm.get('password')?.getError('pattern')">Enter Valid Password</mat-error>
+                    </mat-form-field>
+                    <!-------------------------------------User Input For Mobile---------------------->
+                    <mat-form-field appearance="fill" class="width-2">
+                        <mat-label>Confirm Password</mat-label>
+                        <input type="password" required matInput formControlName="confirm_password">
+                        <mat-hint align="end">{{userForm.get('confirm_password')?.value?.length || 0}}/10</mat-hint>
+                        <!-----------------------Error for valid Phone Number--------------------->
+                        <mat-error>Enter Password</mat-error>
+                        
+                    </mat-form-field>
+                </div>
+                <div *ngIf="err" style="color:red">Passwords do not match</div>
+                <br>
+                <button class="adjust" [disabled]="userForm.invalid || err" fxLayout fxLayoutAlign="center center" type="button" mat-raised-button color="primary" (click)="navigate()">
+                    <mat-icon>save</mat-icon>
+                    <span>SAVE</span>
+                </button>
+            </form>
+        </mat-card>
+</div>    

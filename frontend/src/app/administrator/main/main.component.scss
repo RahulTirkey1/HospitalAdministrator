@@ -1,0 +1,109 @@
+mat-sidenav-container {
+    height: 100%;
+}
+
+mat-accordion{
+z-index:1
+}
+.breadCrumb{
+    cursor: pointer;
+}
+mat-sidenav .display-1{
+ //   background: #E91E63;
+    font-size: x-large;
+    color:WHITE;
+    height:10%;
+    padding: 3%;
+}
+mat-sidenav .display-2{
+    font-size:larger;
+    padding:1rem;
+    color:black
+}
+
+.display-3{
+    min-height:10%;
+    padding:0.5%
+}
+
+img{
+    width:20%;
+    color:white;
+}
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+button.menu{
+    border:none;
+    cursor:pointer;
+    background: #E6E6E6;
+}
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+::ng-deep .matMenu {
+    background: #E6E6E6;
+    width:175px
+}
+
+a{
+    text-decoration: none;
+}
+
+mat-expansion-panel{
+    background: #E6E6E6;
+    cursor:pointer;
+}
+
+mat-sidenav-content{
+    background: #E6E6E6;
+}
+
+.active-list-item:focus{
+    background:#e4c7ce;
+}
+
+mat-nav-list{
+    background:orangered
+}
+
+mat-nav-list:active{
+    background:hotpink
+}
+
+.sticky-bg{
+    background-color: #03a9f4;
+    height:1%;
+    width:100%;
+    padding:4%
+}
+
+.sticky-bg1{
+    background-color: #03a9f4;
+    height:5%;
+    width:100%;
+}
+
+button.adjust{
+    height:2rem;
+    font-size: medium;
+}
+
+
+
+
+
+
+
+
+
