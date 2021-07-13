@@ -1,5 +1,6 @@
 # HospitalAdministrator
 Follow these Steps:-
+
 1)Clone the respository using [git clone https://github.com/RahulTirkey1/HospitalAdministrator.git]
 2)Open both frontend and backend folder and type [npm install] to download dependencies
 3)Open Command Terminal and type [mongod]
